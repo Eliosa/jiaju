@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+     <a href="javascript:void(0)" class="upload-btn">上传</a>
+     <div class="prograss">
+         <div class="prograss-barcon">
+             <h4 class="prograss-title">加载中...</h4>
+             <div class="prograss-bar"></div>
+         </div>
+     </div>
+     <div class="container" >
+     </div>
+     <div class="block-con JS-target-ele">
+         <div class="addsort-con">
+            <div class="addsort">
+                <p>您要添加的分类：</p>
+                <input type="text" id="addType">
+                <button class="addsort-submit">确定</button>
+                <button class="addsort-cancel">取消</button>
+            </div>
+         </div>
+         <h4 class="block-title JS-target-ele">可替换家具
+            <a href="javascript:void(0)" class="block-title-del JS-target-ele" title="删除该家具类"></a>
+         </h4>
+         <a href="javascript:void(0)" class="block-close JS-target-ele"></a>
+         <div class="block-search">
+             <input type="text" id="search" class="">
+             <a href="javascript:void" class="block-search-btn JS-target-ele">搜索</a>
+         </div>
+         <div class="block-upload-con JS-target-ele">
+             <a href="javascript:void(0)" class="block-upload JS-target-ele">上传图片</a>
+             <span class="block-upload-s JS-target-ele"></span>
+         </div>
+         <!--修改2.7-->
+         <select name="" id="JS-sort" class="block-sort JS-target-ele">
+             <option value="0">--选择/取消分类--</option>
+             <option value="1" type="欧式">欧式</option>                                                                                                                                            
+             <option value="2" type="中式">中式</option>
+             <option value="-1">----添加分类----</option>
+         </select>
+         
+         <div class="JS-block JS-target-ele">
+             <ul class="block-replace JS-target-ele">
+                 <li class="block-furniture">
+                     <a href="javascript:void(0)" class="block-furn-delete"></a>
+                         
+                </li>                         
+             </ul>
+         </div>
+     </div>
+     <div class="block-3D">
+         <a href="javascript:void(0)" class="block-3D-close"></a>
+         <iframe src="" frameborder="0" width="100%" height="100%" id="iframe"></iframe>
+     </div>
+      <form action="" class="upload-con JS-target-ele" enctype="multipart/form-data" method="post">
+          <div class="upload">
+              <h4 class="upload-title">选择添加类型</h4>
+              <ul class="upload-type">
+                  <!--<li>添加背景</li>-->
+                  <li>添加新类</li>                                   
+                  <li>添加可替换类</li>
+              </ul>
+             <div class="upload-preview">
+                 <h4 class="upload-preview-title">家具预览</h4>
+                 <img src="" alt="">
+             </div>
+             <div class="upload-file">
+                 <label for="file">文件:</label>
+                 <input type="file" class="upload-input" id="file" >
+                 <div class="upload-content-con">
+                     <input type="text" class="upload-content" value="未选择任何文件">
+                     <!--<a href="javascript:void(0)" class="upload-content-btn">上传</a>-->
+                 </div>
+             </div>
+             <div class="upload-file">
+                 <label for="file">分类:</label>
+                 <select name="" id="" class="upload-sort">
+                     
+                 </select> 
+             </div>
+             <input type="submit" value="提 交">
+             <span class="upload-close"></span>
+          </div>
+      </form>
+
+
+      <!--@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
+     <script src="js/jquery_1_9_0_min.js"></script>
+     <script src="js/myjs.js"></script>
+     <!--兼容ie8及以下-->
+     <!–[if lte IE 8]>
+    
+     <!–<![endif]–>
+</body>
+</html>
