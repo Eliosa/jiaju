@@ -187,13 +187,35 @@ var move={
         })
         //3.1以上
         $(document).mousedown(function(e){
-            that.mousedownFun();
+             //3.16
+            var e=window.event||e;
+            var target=e.target||e.srcElement;
+            if($(target).hasClass('menu-threeLevel')){
+                resourse.reMouseDownFun(e);
+            }else{
+                that.mousedownFun();
+            }
         });
-        $(document).mouseup(function(){
+        $(document).mouseup(function(e){
+            //3.16
+             var e=window.event||e;
+             var target=e.target||e.srcElement;
+             if(resourse.clickFlag==1 ){
+                    resourse.reMouseUpFun(e);
+            }else{
                 that.mouseupFun();
+            }
+                
         });
         $(document).mousemove(function(e){
-                that.mousemoveFun();
+                //3.16
+                var e=window.event||e;
+                var target=e.target||e.srcElement;
+                if(resourse.clickFlag==1){
+                    resourse.reMouseMoveFun(e);
+                }else{
+                    that.mousemoveFun();
+                }
         });
         
     }
@@ -576,6 +598,10 @@ var replace={
         //显示右侧栏
         // $('.block-close').trigger('click');
         var that=this;
+        //3.16
+        if($('.resourse').css('display')!='none'){
+            $('.resourse').fadeOut();
+        }
         var sWidth=document.body.clientWidth;
         var sHeight=sWidth/move.imgJson[0].width*move.imgJson[0].height; 
         if(parseInt(that.conNode.css('width'))==175){
@@ -629,8 +655,26 @@ var replace={
                 formSubmit.uploadNode.slideDown();
             }
             if($(target).hasClass('upload-btn')){
-                formSubmit.uploadNode.slideDown();
+                //3.16
+            //   formSubmit.uploadNode.slideDown();
+                $('.pattern-con').fadeIn();
             }
+            //3.16
+            if($(target).hasClass('JS-pattern1')){
+                    $('.pattern-con').fadeOut();
+                    $('.resourse').fadeIn();
+            }
+                if($(target).hasClass('JS-pattern2')){
+                $('.pattern-con').fadeOut();
+                formSubmit.uploadNode.fadeIn();
+            }
+            if($(target).hasClass('pattern-close')){
+                $('.pattern-con').fadeOut();
+            }
+            if($(target).hasClass('re-title-close')){
+                $('.resourse').fadeOut();
+            }
+            //3.16 up
         });
     }
 };
@@ -686,8 +730,10 @@ var formSubmit={
     init:function(){
         var that=this;
         that.getsort();
+        $('.upload-preview-title').click(function(){
+            $('#file').trigger('click');
+        })
         that.inputfileNode.change(function(){
-            // console.log(that.inputfileNode.val(),that.inputfileNode.val()=='',that.inputfileNode.val()==null);
             if(that.inputfileNode.val()==''){
                 that.inputtextNode.val('未选择任何文件');
             }else{
@@ -862,7 +908,6 @@ var circle={
         var calculate,bacConut;
         var sWidth=document.body.clientWidth;
         var w,h;
-        console.log('come in')
         if(node.hasClass('circle-left')){
             console.log('left');
             calculate=1
@@ -912,11 +957,269 @@ var zIndex={
         }
     }
 }
+var resourse={
+        startX:null,
+        startY:null,
+        targetNode:null,
+        clickFlag:0,
+        createFlag:0,
+        reArr:null,
+        reData:[
+            {
+                name1:["椅子","田园风"],
+                name2:["床","欧式风"],
+                name3:["桌子","日式风"],
+                name4:["沙发","简约风","欧式风"]
+            },
+            {
+                FurType:"椅子",
+                FurId:"",
+                FurName:"田园风椅子",
+                FurStyle:"田园风",
+                FurWidth:"400",
+                FurHeight:"249",
+                FurUrl:"img/desk.png"
+            },
+            {
+                FurType:"床",
+                FurId:"",
+                FurName:"欧式床",
+                FurStyle:"欧式风",
+                FurWidth:"618",
+                FurHeight:"408",
+                FurUrl:"img/bed.png"
+            },
+            {
+                FurType:"床",
+                FurId:"",
+                FurName:"欧式木床",
+                FurStyle:"欧式风",
+                FurWidth:"618",
+                FurHeight:"408",
+                FurUrl:"img/bed.png"
+            },
+            {
+                FurType:"桌子",
+                FurId:"",
+                FurName:"日式风木桌",
+                FurStyle:"日式风",
+                FurWidth:"400",
+                FurHeight:"249",
+                FurUrl:"img/desk.png"
+            },
+            {
+                FurType:"沙发",
+                FurId:"",
+                FurName:"欧式风真皮沙发",
+                FurStyle:"欧式风",
+                FurWidth:"544",
+                FurHeight:"395",
+                FurUrl:"img/sofa.png"
+            },
+            {
+                FurType:"沙发",
+                FurId:"",
+                FurName:"简约风真皮沙发",
+                FurStyle:"简约风",
+                FurWidth:"544",
+                FurHeight:"395",
+                FurUrl:"img/sofa.png"
+            }
+        ],
+        loadFurn2Fun:function(){
+          var that=this;
+          if(that.reData!=null){
+                //对reData进行转化 JSON.parse
+                //对现有家具类 分析操作 方便插入
+                var reType=that.reData[0];
+                var arr=new Array();
+                var k=0;
+                for( i in reType){
+                    arr[k]=new Array();
+                    for(var j=0;j<reType[i].length;j++){
+                        arr[k][j]=reType[i][j];
+                    }
+                    k++;
+                }
+                that.reArr=arr;
+                console.log('fdsfsdfsdf',arr)
+                //插入框架
+                var str='';
+                for(var i=0;i<arr.length;i++){
+                    str+='<li class="menu-oneLevel">'+
+                    '<a class="menu-title  JS-menuBtn" href="javascript:void(0)"><i class="status-up " >状态.图标（是否展开）</i>'+arr[i][0]+'</a>'+
+                    '<ul class="menu-twoLevel-con">'
+                    for(var j=1;j<arr[i].length;j++){
+                        str+='<li class="menu-twoLevel">'+
+                            '<a class="menu-title JS-menuBtn" href="javascript:void(0)"><i class="status-up ">状态图标（是否展开）</i>'+arr[i][j]+'</a>'+
+                            '<ul class="menu-threeLevel-con"></ul>'
+                    }
+                    str+='</ul></li>';
+                }
+                $('.re-menu').append(str);
+                //在框架中插入家具
+                var pos1,pos2;
+                for(var i=1;i<that.reData.length;i++){
+                    for(var j=0;j<arr.length;j++){
+                        if(arr[j][0]==that.reData[i].FurType){
+                            pos1=j;
+                            break;
+                        }
+                    }
+                    pos2=arr[pos1].indexOf(that.reData[i].FurStyle)-1;
+                    console.log(pos1,pos2)
+                    $('.re-menu').children('.menu-oneLevel').eq(pos1).children('ul').children('li').eq(pos2).children('.menu-threeLevel-con').append('<li reDataId="'+i+'" class="menu-threeLevel" style="background-image:url('+that.reData[i].FurUrl+')"><i>'+that.reData[i].FurName+'</i></li>');
+                }
+            }
+        },
+        loadFurFun:function(){
+            var that=this;
+            if(that.reData==null){
+                //3.16ajax
+                $.ajax({
+                    url:'{$Think.config.__SITEURL__}?&a=groupjson&cjid={$ProjectInfo.id}',
+                    type:'post',
+                    success:function(data){
+                        that.reData=JSON.parse(data);
+                        that.loadFurn2Fun()
+                    },
+                    error:function(xmlhttp,status,error){
+                        console.log('ajax fail');
+                        console.log(xmlhttp,status,error)
+                    }
+                });
+            }else{
+                that.loadFurn2Fun()
+            }
+            
+            
+        },
+        statusFun:function(node){
+            //判断 展开 还是收回
+            var that=this;
+            if(node.hasClass('JS-menuShow')==true){
+                //已经展开,需要收回
+                node.removeClass('JS-menuShow')
+                node.children('i').removeClass('status-expand');
+            }else{
+                //未展开，需要展开
+                node.addClass('JS-menuShow');
+                node.children('i').addClass('status-expand');
+            }
+        },
+        searchFun:function(){
+            var that=this;
+            var keyword=$('.re-search-text').val();
+            $('.resourse').addClass('JS-reStatus2');
+            var node=$('.search-menu');
+            node.children().remove();
+            if(that.reData!=null){
+                for(var i=1;i<that.reData.length;i++){
+                    if(that.reData[i].FurName.match(keyword)!=null){
+                        node.append('<li class="menu-threeLevel" style="background-image:url('+that.reData[i].FurUrl+')"><i title="'+that.reData[i].FurName+'">'+that.reData[i].FurName+'</i></li>');
+                    }
+                }
+            }
+        },
+        addFurFun:function(x,y){
+            var that=this;
+            var sWidth=document.body.clientWidth;
+            var width=0;
+            var h;
+            var reIndex=that.targetNode.attr('reDataId');
+            var w=that.reData[reIndex].FurWidth*sWidth/(move.imgJson[0].width);
+            h=sWidth/move.imgJson[0].width*parseInt(that.reData[reIndex].FurHeight);
+            var l=x-w/2;
+            var t=y-h/2;
+            //3.3
+            move.imgJson[move.imgJson.length-1].left=l;
+            move.imgJson[move.imgJson.length-1].top=t;
+            style=' style="z-index:'+zIndex.max+';left:'+l+'px;top:'+t+'px;width:'+w+'px;height:'+h+'px;background:url('+that.reData[reIndex].FurUrl+')  no-repeat;background-size:'+w+'px; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(  src='+that.reData[reIndex].FurUrl+',sizingMethod=\'scale\');background:none\\9;"';
+            $('.container').append('<div id="'+that.reData[reIndex].FurId +'" typeid="'+that.reData[reIndex].Furtypeid+'" jjid="'+ that.reData[reIndex].Furjjid+'" jjgid="'+that.reData[reIndex].Furjjgroupid+'" name="'+that.reData[reIndex].FurName+'" '+style+' class="JS-move container-ele"><span class="JS-target-ele"></span><span class="JS-target-ele"></span><span class="JS-target-ele"></span><span class="JS-target-ele"></span><i class="circle-left JS-target-ele">左转</i><i class="circle-right JS-target-ele">右转</i></i>'+
+                '<a href="javascript:void(0)" class="JS-a JS-target-ele">替换家具</a><a href="javascript:void(0)" class="JS-b JS-target-ele types">样式</a><b class="JS-target-ele JS-TTop">置顶</b><b class="JS-target-ele JS-UUp">上一层</b><b class="JS-target-ele JS-DDown">下一层</b><b class="JS-target-ele JS-BBottom">置底</b></div>');
+        },
+        reMouseDownFun:function(e){
+            var that=this;
+            var event=window.event||e;
+            var target=event.target||event.srcElement;
+            that.startX=e.clientX;
+            that.startY=e.clientY;
+            // console.log('at the beginning',that.startX,that.startY)
+            that.clickFlag=1;
+            that.targetNode=$(target);
+        },
+        reMouseMoveFun:function(e){
+            var that=this
+            var event=window.event||e;
+            var target=event.target||event.srcElement;
+            // console.log('is a test',that.startX-e.clientX,e.clientY-that.startY)
+            var distance=Math.sqrt(Math.pow(that.startX-e.clientX,2)+Math.pow(e.clientY-that.startY,2));
+            if(distance>170){
+                //满足该条件时 创建  
+                if(that.createFlag==0){
+                    that.createFlag=1;
+                    var reIndex=that.targetNode.attr('reDataId');
+                    var dd={
+                        height:that.reData[reIndex].FurHeight,
+                        id:that.reData[reIndex].FurId,
+                        layer:'',
+                        left:'',
+                        name:that.reData[reIndex].FurName,
+                        top:'',
+                        url:that.reData[reIndex].FurUrl,
+                        width:that.reData[reIndex].FurWidth
+                    }
+                    move.imgJson[move.imgJson.length]=dd;
+                    that.addFurFun(e.clientX,e.clientY);
+                    
+                }else{
+                    var w=parseInt($('.container div:last').css('width'));
+                    var h=parseInt($('.container div:last').css('height'));
+                    $('.container div:last').css({left:e.clientX-w/2+'px',top:e.clientY-h/2+'px'});
+                }
+            }
+        },
+        reMouseUpFun:function(e){
+            var that=this;
+            var event=window.event||e;
+            var target=event.target||event.srcElement;
+            that.clickFlag=0;
+            that.targetNode=null;
+            that.createFlag=0;
+        },
+        init:function(){
+            var that=this;
+            that.loadFurFun();
+            $(document).click(function(e){
+                var event=window.event||e;
+                var target=event.target||event.srcElement;
+                if($(target).hasClass('JS-menuBtn')){
+                    that.statusFun($(target));
+                }
+                if($(target).parent().hasClass('JS-menuBtn')){
+                    that.statusFun($(target).parent());
+                }
+                if($(target).hasClass('re-search-btn')){
+                    that.searchFun();
+                }
+                if($(target).hasClass('re-search-return')){
+                    $('.resourse').removeClass('JS-reStatus2');
+                }
+                if($(target).hasClass('menu-threeLevel')){
+                    that.reMouseMoveFun(e);
+                }
+            });
+        }
+    }   
+
+resourse.init();
+replace.init();
+move.init();
 search.init();
 formSubmit.init();
 sort.init();
-move.init();
+
 zoom.init();
 operate.init();
-replace.init();
+
 zoom.init();
