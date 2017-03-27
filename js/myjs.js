@@ -193,7 +193,7 @@ var move={
             if($(target).hasClass('menu-threeLevel')){
                 resourse.reMouseDownFun(e);
             }else{
-                that.mousedownFun();
+                that.mousedownFun(e);
             }
         });
         $(document).mouseup(function(e){
@@ -214,7 +214,7 @@ var move={
                 if(resourse.clickFlag==1){
                     resourse.reMouseMoveFun(e);
                 }else{
-                    that.mousemoveFun();
+                    that.mousemoveFun(e);
                 }
         });
         
@@ -758,7 +758,6 @@ var formSubmit={
         //修改处 下下
         that.inputfileNode.change(function(){
             var file=this;
-            console.log('inininin');
             if (file.files && file.files[0])
             {
                 var reader = new FileReader();
@@ -909,15 +908,13 @@ var circle={
         var sWidth=document.body.clientWidth;
         var w,h;
         if(node.hasClass('circle-left')){
-            console.log('left');
-            calculate=1
+            calculate=1;
         }else{
-            console.log('right');
             calculate=-1;
         }
         that.initCount=that.initCount+calculate;
         if(that.initCount==-1){
-            that.initCount=that.data.length-1
+            that.initCount=that.data.length-1;
         }
         else if(that.initCount==that.data.length){
             that.initCount=0;
@@ -1042,7 +1039,6 @@ var resourse={
                     k++;
                 }
                 that.reArr=arr;
-                console.log('fdsfsdfsdf',arr)
                 //插入框架
                 var str='';
                 for(var i=0;i<arr.length;i++){
@@ -1067,7 +1063,6 @@ var resourse={
                         }
                     }
                     pos2=arr[pos1].indexOf(that.reData[i].FurStyle)-1;
-                    console.log(pos1,pos2)
                     $('.re-menu').children('.menu-oneLevel').eq(pos1).children('ul').children('li').eq(pos2).children('.menu-threeLevel-con').append('<li reDataId="'+i+'" class="menu-threeLevel" style="background-image:url('+that.reData[i].FurUrl+')"><i>'+that.reData[i].FurName+'</i></li>');
                 }
             }
@@ -1081,7 +1076,7 @@ var resourse={
                     type:'post',
                     success:function(data){
                         that.reData=JSON.parse(data);
-                        that.loadFurn2Fun()
+                        that.loadFurn2Fun();
                     },
                     error:function(xmlhttp,status,error){
                         console.log('ajax fail');
@@ -1089,7 +1084,7 @@ var resourse={
                     }
                 });
             }else{
-                that.loadFurn2Fun()
+                that.loadFurn2Fun();
             }
             
             
@@ -1099,7 +1094,7 @@ var resourse={
             var that=this;
             if(node.hasClass('JS-menuShow')==true){
                 //已经展开,需要收回
-                node.removeClass('JS-menuShow')
+                node.removeClass('JS-menuShow');
                 node.children('i').removeClass('status-expand');
             }else{
                 //未展开，需要展开
@@ -1140,8 +1135,8 @@ var resourse={
         },
         reMouseDownFun:function(e){
             var that=this;
-            var event=window.event||e;
-            var target=event.target||event.srcElement;
+            var e=window.event||e;
+            var target=e.target||e.srcElement;
             that.startX=e.clientX;
             that.startY=e.clientY;
             // console.log('at the beginning',that.startX,that.startY)
@@ -1150,8 +1145,8 @@ var resourse={
         },
         reMouseMoveFun:function(e){
             var that=this
-            var event=window.event||e;
-            var target=event.target||event.srcElement;
+            var e=window.event||e;
+            var target=e.target||e.srcElement;
             // console.log('is a test',that.startX-e.clientX,e.clientY-that.startY)
             var distance=Math.sqrt(Math.pow(that.startX-e.clientX,2)+Math.pow(e.clientY-that.startY,2));
             if(distance>170){
@@ -1191,8 +1186,8 @@ var resourse={
             var that=this;
             that.loadFurFun();
             $(document).click(function(e){
-                var event=window.event||e;
-                var target=event.target||event.srcElement;
+                var e=window.event||e;
+                var target=e.target||e.srcElement;
                 if($(target).hasClass('JS-menuBtn')){
                     that.statusFun($(target));
                 }
