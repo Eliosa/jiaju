@@ -587,7 +587,7 @@ var replace={
                 h=75;
                 w=that.imgJson[i].width/that.imgJson[i].height*h;
             }
-            that.ulNode.append('<li class="block-furniture JS-target-ele" style="background:url('+that.imgJson[i].url+') no-repeat;background-size:'+w+'px '+h+'px;background-position:center center;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(  src='+that.imgJson[i].url+',sizingMethod=\'scale\');background:none\\9; "><span class="block-show-title">'+that.imgJson[i].name+'</span> <a href="javascript:void(0)" class="block-furn-delete JS-target-ele" title="删除该家具"></a> <a href="javascript:void(0)" class="block-3d-show JS-target-ele" title="3D展示"></a></li>');
+            that.ulNode.append('<li class="block-furniture JS-target-ele" style="background:url('+that.imgJson[i].url+') no-repeat;background-size:'+w+'px '+h+'px;background-position:center center;filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(  src='+that.imgJson[i].url+',sizingMethod=\'scale\');background:none\\9; "><span class="block-show-title">'+that.imgJson[i].name+'</span> <a href="javascript:void(0)" class="block-furn-delete JS-target-ele" title="删除该家具"></a> </li>');
         }
     },
     replacefurnitureFun:function(index){
@@ -1208,13 +1208,13 @@ var resourse={
     }   
 
 resourse.init();
+search.init();
 replace.init();
 move.init();
-search.init();
+zoom.init();
 formSubmit.init();
 sort.init();
 
-zoom.init();
+
 operate.init();
 
-zoom.init();
