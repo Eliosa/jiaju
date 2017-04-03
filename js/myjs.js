@@ -52,8 +52,8 @@ var move={
         },
         {
             name:'desk',
-            width:400,
-            height:249,
+            width:375 ,
+            height:167,
             url:'img/desk.png',
             left:400,
             top:700,
@@ -259,8 +259,9 @@ var zoom={
         that.targetNode.children('i').css({'width':iwidth+'px','height':iheight+'px','backgroundSize':iwidth+'px'});
         // 3.3
         var bwidth=iwidth*2;
-        var bheight=iwidth/3*2
-        that.targetNode.children('b').css({'bottom':iheight+'px','left':'4%','width':bwidth+'px','height':bheight+'px' ,'lineHeight':bheight+'px'});
+        var bheight=iwidth/3*2;
+        that.targetNode.children('b').css({'bottom':iheight+'px','left':'4%','width':bwidth+'px','height':bheight+'px' ,'lineHeight':bheight+'px','fontSize':bheight/2+'px'});
+
         that.targetNode.children('b').eq(1).css({'left':'28%'});
         that.targetNode.children('b').eq(2).css({'left':'52%'});
         that.targetNode.children('b').eq(3).css({'left':'76%'});
@@ -286,9 +287,10 @@ var zoom={
         var iheight=iwidth;
         that.targetNode.children('i').css({'width':iwidth+'px','height':iheight+'px','backgroundSize':iwidth+'px','lineHeight':bheight+'px'});
                     // 3.3
-        var bwidth=iwidth*2;
-        var bheight=iwidth/3*2
-        that.targetNode.children('b').css({'bottom':iheight+'px','left':'4%','width':bwidth+'px','height':bheight+'px' ,'lineHeight':bheight+'px'});
+       var bwidth=iwidth*2;
+        var bheight=iwidth/3*2;
+        that.targetNode.children('b').css({'bottom':iheight+'px','left':'4%','width':bwidth+'px','height':bheight+'px' ,'lineHeight':bheight+'px','fontSize':bheight/2+'px'});
+
         that.targetNode.children('b').eq(1).css({'left':'28%'});
         that.targetNode.children('b').eq(2).css({'left':'52%'});
         that.targetNode.children('b').eq(3).css({'left':'76%'});     
@@ -495,8 +497,8 @@ var replace={
         },
         {
             name:'desk',
-            width:400,
-            height:249,
+            width:375 ,
+            height:167,
             url:'img/desk.png',
             left:400,
             top:700,
@@ -513,67 +515,14 @@ var replace={
         },
         {
             name:'desk',
-            width:400,
-            height:249,
+            width:375 ,
+            height:167,
             url:'img/desk.png',
             left:400,
             top:700,
             type:'欧式'
         }, 
-            {
-            name:'bed',
-            width:618,
-            height:408,
-            url:'img/bed.png',
-            left:900,
-            top:450,
-            type:'欧式'
-        },
-        {
-            name:'desk',
-            width:400,
-            height:249,
-            url:'img/desk.png',
-            left:400,
-            top:700,
-            type:'中式'
-        }, 
-            {
-            name:'bed',
-            width:618,
-            height:408,
-            url:'img/bed.png',
-            left:900,
-            top:450,
-            type:'欧式'
-        },
-        {
-            name:'desk',
-            width:400,
-            height:249,
-            url:'img/desk.png',
-            left:400,
-            top:700,
-            type:'中式'
-        }, 
-            {
-            name:'bed',
-            width:618,
-            height:408,
-            url:'img/bed.png',
-            left:900,
-            top:450,
-            type:'中式'
-        },
-        {
-            name:'desk',
-            width:400,
-            height:249,
-            url:'img/desk.png',
-            left:400,
-            top:700,
-            type:'欧式'
-        }   
+       
     ],
     //替换家具125*75
     loadfurnitureFun:function(){
@@ -592,7 +541,16 @@ var replace={
     },
     replacefurnitureFun:function(index){
         var that=this;
-        $('.JS-target').css({backgroundImage:'url('+that.imgJson[index].url+')',filter: 'progid:DXImageTransform.Microsoft.AlphaImageLoader(  src='+that.imgJson[index].url+',sizingMethod=\'scale\')',background:'none\\9'});
+        // $('.JS-target').css({backgroundImage:'url('+that.imgJson[index].url+')',filter: 'progid:DXImageTransform.Microsoft.AlphaImageLoader(  src='+that.imgJson[index].url+',sizingMethod=\'scale\')',background:'none\\9'});
+        var width,height;
+            width=that.imgJson[index].width;
+            height=that.imgJson[index].height;
+            var w2,h2;
+            //替换图片时，原图宽不变，高随比例变化
+            w2=parseInt($('.JS-target').css('width'));
+            h2=height*w2/width;
+            $('.JS-target').css({width:w2+'px',height:h2+'px',backgroundImage:'url('+that.imgJson[index].url+')',filter: 'progid:DXImageTransform.Microsoft.AlphaImageLoader(  src='+that.imgJson[index].url+',sizingMethod=\'scale\')',background:'none\\9'});
+
     },
     clickFun:function(){
         //显示右侧栏
@@ -897,8 +855,8 @@ var circle={
             height:"408"
         },
         {
-            width:400,
-            height:249,
+           width:375 ,
+            height:167,
             url:'img/desk.png',
         }
     ],
@@ -973,8 +931,9 @@ var resourse={
                 FurId:"",
                 FurName:"田园风椅子",
                 FurStyle:"田园风",
-                FurWidth:"400",
-                FurHeight:"249",
+                
+                FurWidth:"375",
+                FurHeight:"167",
                 FurUrl:"img/desk.png"
             },
             {
@@ -1000,8 +959,8 @@ var resourse={
                 FurId:"",
                 FurName:"日式风木桌",
                 FurStyle:"日式风",
-                FurWidth:"400",
-                FurHeight:"249",
+                FurWidth:"375",
+                FurHeight:"167",
                 FurUrl:"img/desk.png"
             },
             {
